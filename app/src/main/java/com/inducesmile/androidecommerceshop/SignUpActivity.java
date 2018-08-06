@@ -24,6 +24,7 @@ import com.inducesmile.androidecommerceshop.network.GsonRequest;
 import com.inducesmile.androidecommerceshop.network.VolleySingleton;
 import com.inducesmile.androidecommerceshop.utils.CustomApplication;
 import com.inducesmile.androidecommerceshop.utils.Helper;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +41,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText password;
     private EditText address;
     private EditText phoneNumber;
+    private SweetAlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class SignUpActivity extends AppCompatActivity {
             actionBar.hide();
         }
 
+        dialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
         fullname = (EditText)findViewById(R.id.fullname);
         username = (EditText)findViewById(R.id.username);
         email = (EditText)findViewById(R.id.email);
@@ -88,6 +91,9 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void registerToRemoteServer(String fullname, String username, String email, String password, String address, String phoneNumber){
+        dialog.setContentText("Signing up..");
+        dialog.show();
+
         Map<String, String> params = new HashMap<String,String>();
         params.put(Helper.FULLNAME, fullname);
         params.put(Helper.USERNAME, username);
@@ -116,6 +122,7 @@ public class SignUpActivity extends AppCompatActivity {
         return new Response.Listener<UserObject>() {
             @Override
             public void onResponse(UserObject response) {
+                dialog.dismiss();
                 try {
                     Log.d(TAG, "Json Response " + response.getStatus());
                     if(TextUtils.isEmpty(response.getStatus())){
@@ -140,6 +147,7 @@ public class SignUpActivity extends AppCompatActivity {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
                 error.printStackTrace();
             }
         };

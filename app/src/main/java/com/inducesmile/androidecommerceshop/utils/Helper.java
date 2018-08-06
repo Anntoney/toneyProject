@@ -33,7 +33,7 @@ public class Helper {
 
 
     public static final String PUBLIC_FOLDER = "http://antoney.hibasoftware.co.ke/public/";
-    public static final String PUBLIC_API_FOLDER = "https://antoney.hibasoftware.co.ke/templates/api/";
+    public static final String PUBLIC_API_FOLDER = "https://antoney.hibasoftware.co.ke/public/api/";
 
     public static final String PATH_TO_SERVER_LOGIN = PUBLIC_API_FOLDER + "login";
     public static final String PATH_TO_SERVER_REGISTRATION = PUBLIC_API_FOLDER + "signin";

@@ -24,6 +24,7 @@ import com.inducesmile.androidecommerceshop.network.GsonRequest;
 import com.inducesmile.androidecommerceshop.network.VolleySingleton;
 import com.inducesmile.androidecommerceshop.utils.CustomApplication;
 import com.inducesmile.androidecommerceshop.utils.Helper;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email;
     private EditText password;
 
+    private SweetAlertDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -49,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         if(null != actionBar){
             actionBar.hide();
         }
+        dialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
 
         UserObject mUser = ((CustomApplication)getApplication()).getLoginUser();
         if(mUser != null){
@@ -90,6 +93,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginToRemoteServer(String email, String password){
+        dialog.setContentText("Signing you in...");
+        dialog.setTitleText("Please Wait :)");
+        dialog.show();
         Map<String, String> params = new HashMap<String,String>();
         params.put(Helper.EMAIL, email);
         params.put(Helper.PASSWORD, password);
@@ -114,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
         return new Response.Listener<UserObject>() {
             @Override
             public void onResponse(UserObject response) {
+                dialog.dismiss();
                 try {
                     Log.d(TAG, "Json Response " + response.getStatus());
                     if(TextUtils.isEmpty(response.getStatus())){
@@ -138,6 +145,7 @@ public class LoginActivity extends AppCompatActivity {
         return new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
                 error.printStackTrace();
             }
         };

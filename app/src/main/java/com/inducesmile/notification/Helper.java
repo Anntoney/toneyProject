@@ -3,7 +3,7 @@ package com.inducesmile.notification;
 
 public class Helper {
 
-    public static final String PATH_TO_SERVER_TOKEN_STORAGE = "https://antoney.hibasoftware.co.ke/templates/api/notify.php";
+    public static final String PATH_TO_SERVER_TOKEN_STORAGE = "https://antoney.hibasoftware.co.ke/public/api/notify.php";
 
     public static final String TOKEN_TO_SERVER = "server_token";
     public static final String DEVICE_NAME = "device_name";
